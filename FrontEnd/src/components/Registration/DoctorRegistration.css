@@ -1,0 +1,162 @@
+.doctorfullcontainer {
+    background-color: rgb(236, 235, 235);
+}
+
+.doctorregister {
+    margin: auto;
+    display: flex;
+    height: 1000px;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.doctorcontainer {
+    max-width: 700px;
+    width: 90%;
+    height: 800px;
+    background-color: white;
+    color: black;
+    padding: 25px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 30px grey;
+}
+
+.doctorcontainer .doctorregtitle {
+    font-size: 25px;
+    font-weight: bold;
+    position: relative;
+}
+
+.doctorcontainer .doctorregtitle::before {
+    position: absolute;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    background: #9b59b6;
+}
+
+.doctorcontainer form .doctoruser-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+}
+
+form .doctoruser-details .doctorinput-box {
+    margin-bottom: 15px;
+    width: calc(100% /2 - 20px);
+}
+
+.doctorintext {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #9b59b6;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.doctoruser-details .doctorinput-box .doctordetails {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.doctorcontainer form .doctoruser-details input {
+    height: 45px;
+    width: 99%;
+    outline: none;
+    border-radius: 5px;
+    border: 3px solid purple;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.doctorselectdata {
+    height: 45px;
+    width: 99%;
+    outline: none;
+    border-radius: 5px;
+    border: 3px solid purple;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.doctorcontainer form .doctoruser-details input:focus,
+.doctorcontainer form .doctoruser-details input:valid {
+    border-color: black;
+}
+
+form .gender-details .gender-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+form .gender-details .category {
+    display: flex;
+    width: 80%;
+    margin: 14px 0;
+    justify-content: space-between;
+}
+
+.gender-details .category label {
+    display: flex;
+    align-items: center;
+}
+
+.gender-details .category .dot {
+    height: 18px;
+    width: 18px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 5px solid transparent;
+}
+
+form .doctorbutton input {
+    height: 50px;
+    width: 100%;
+    outline: none;
+    color: white;
+    border: none;
+    font-size: 25px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    background-color: black;
+    font-weight: bold;
+}
+
+form .doctorbutton input:hover {
+    background: purple;
+}
+
+@media (max-with: 584) {
+    .doctorcontainer {
+        max-width: 100%;
+    }
+    form .user-details .doctorinput-box {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .doctorcontainer form .user-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+}
+
+.doctorintext {
+    align-items: center;
+}
+
+#reglinks {
+    margin-left: 2px;
+    color: purple;
+}

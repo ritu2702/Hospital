@@ -1,0 +1,131 @@
+.bkcontainer-slider {
+    max-width: 900px;
+    height: 830px;
+    margin: 100px auto 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.bkslidehead {
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 40px;
+    color: rgb(248, 31, 31);
+    font-weight: 500;
+}
+
+.bkslidesubhead {
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 16px;
+    color: grey;
+}
+
+.bkcontainer-slider .bktitle {
+    font-weight: bolder;
+    font-style: normal;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-size: 25px;
+    margin-left: 60px;
+    color: rgb(241, 8, 8);
+}
+
+.bksubtitle {
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 100px;
+    color: gray;
+}
+
+@media screen and (max-width: 700px) {
+    .bkcontainer-slider {
+        margin: 100px 10px 0;
+    }
+}
+
+.bkslide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    opacity: 0;
+    transition: opacity ease-in-out 0.4s;
+}
+
+.bkslide .bkimg {
+    width: 90%;
+    height: 500px;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 30px;
+    margin-left: 70px;
+}
+
+.bkactive-anim {
+    opacity: 1;
+}
+
+.btn-slide {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    border: 1px solid rgba(34, 34, 34, 0.287);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-slide img {
+    width: 35px;
+    height: 25px;
+    pointer-events: none;
+}
+
+.prev {
+    top: 50%;
+    left: 40px;
+    transform: translateY(-60%);
+}
+
+.next {
+    top: 50%;
+    right: 2px;
+    transform: translateY(-60%);
+}
+
+.bkcontainer-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    color: grey;
+}
+
+.bkdot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin: 0 5px;
+    background: white;
+    left: 80px;
+}
+
+.bkdot.bkactive {
+    background: rgb(32, 32, 32);
+}
+
+
+/* .slid{
+    display: flex;
+    flex-wrap: wrap;
+} */

@@ -1,0 +1,122 @@
+.box {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: 150px;
+    width: 70%;
+    box-sizing: border-box;
+    box-shadow: 0px 10px 30px grey;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+}
+
+.box:hover {
+    box-shadow: 0px 0px 12px 8px gray;
+    z-index: 50;
+}
+
+.box h4 {
+    font-size: 50px;
+    height: 100px;
+    text-align: center;
+    margin-top: 10px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.insidebox {
+    cursor: pointer;
+    margin: auto;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    line-height: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+    /* border: 1px solid white; */
+}
+
+.user-icon {
+    width: 120px;
+    margin: auto;
+    margin-left: 90px;
+    height: 100px;
+    margin-right: 50px;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    color: rgb(109, 167, 3);
+    border-radius: 5px;
+}
+
+.doctor-icon {
+    height: 100px;
+    margin-left: 90px;
+    width: 120px;
+    padding: 10px;
+    background-color: white;
+    color: rgb(109, 167, 3);
+    border-radius: 5px;
+}
+
+.admin-icon {
+    height: 100px;
+    margin-left: 90px;
+    padding: 10px;
+    width: 120px;
+    background-color: white;
+    color: rgb(109, 167, 3);
+    border-radius: 5px;
+}
+
+.user-title {
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 50px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: 2px solid white;
+    color: black;
+    text-align: center;
+}
+
+.doctor-title {
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 50px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: 2px solid white;
+    color: black;
+    text-align: center;
+}
+
+.admin-title {
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-right: 10px;
+    height: 50px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: 2px solid white;
+    color: black;
+    text-align: center;
+}
+
+.user-title:hover,
+.doctor-title:hover,
+.admin-title:hover {
+    background-color: white;
+    color: black;
+    box-shadow: 1px 1px 8px 4px rgb(109, 167, 3);
+}

@@ -1,0 +1,50 @@
+/* .carousel {
+    width: 600px;
+    height:380px;
+    margin: auto;
+}
+
+.carousel-control-prev{
+    height: 300px;
+    color: coral;
+}
+
+.carousel-control-next {
+    height: 300px;
+    color: coral;
+}
+
+.carousel .carousel-control-prev-icon {
+    visibility: hidden;
+}
+
+.carousel:hover .carousel-control-prev-icon {
+    visibility: visible;
+    color: crimson;
+}
+
+.carousel .carousel-control-next-icon {
+    visibility: hidden;
+}
+
+.carousel:hover .carousel-control-next-icon {
+    visibility: visible;
+}
+
+.carousal-caption{
+    color:#740c0c;
+    text-align: center;
+} */
+
+.VideoCaro {
+    margin-top: 80px;
+    margin-bottom: 50px;
+}
+
+.VideoCaroHead {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 40px;
+    color: rgb(26, 41, 204);
+}
