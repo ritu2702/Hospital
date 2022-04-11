@@ -33,6 +33,7 @@ export const Testimonial = () => {
     >
       <div style={{ width: "50%", textAlign: "center" }}>
         <h1 className="sliderheading">TESTIMONIALS</h1>
+
         <Slider prevArrow={<PreviousBtn />} nextArrow={<NextBtn />}>
           <Card img="https://media.istockphoto.com/photos/portrait-of-happy-senior-woman-looking-at-camera-with-smile-picture-id1370275964?k=20&m=1370275964&s=612x612&w=0&h=Rp7XLTH2NTBXGqaRppMfau1r7mVXnaKW0VwJdIh5wCI=" />
           <Card img="https://media.istockphoto.com/photos/portrait-of-a-beautiful-young-indian-woman-picture-id917499044?k=20&m=917499044&s=612x612&w=0&h=B3VtoXuQsup7ZK1C_DlvMB96vQvGYpKF8FJ5RG1upTg=" />

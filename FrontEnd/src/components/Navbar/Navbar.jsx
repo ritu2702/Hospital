@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import logo from "../../images/logo.jpg";
+import { UserContext } from "../../context/context";
 
 export const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -26,31 +28,68 @@ export const Navbar = () => {
     e.preventDefault();
     navigate("/signup", { replace: true });
   };
+  const handleLogoutPage = (e) => {
+    e.preventDefault();
+    navigate("/", { replace: true });
+  };
+
+  const { state, dispatch } = useContext(UserContext);
+
+  const RenderMenu = () => {
+    if (state) {
+      return (
+        <>
+          <li className="home" onClick={handleHomePage}>
+            Home
+          </li>
+          <li className="about" onClick={handleAboutPage}>
+            About Us
+          </li>
+          <li className="services" onClick={handleServicesPage}>
+            Services
+          </li>
+          <li className="contact" onClick={handleContactPage}>
+            Contact Us
+          </li>
+          <li className="signup" onClick={handleLogoutPage}>
+            Logout
+          </li>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <li className="home" onClick={handleHomePage}>
+            Home
+          </li>
+          <li className="about" onClick={handleAboutPage}>
+            About Us
+          </li>
+          <li className="services" onClick={handleServicesPage}>
+            Services
+          </li>
+          <li className="contact" onClick={handleContactPage}>
+            Contact Us
+          </li>
+          <li className="signup" onClick={handleSignUpPage}>
+            Signup
+          </li>
+        </>
+      );
+    }
+  };
 
   return (
     <div className="navbar">
       <h3 className="logo" onClick={handleHomePage}>
+        <img className="logoimg" src={logo} alt="logo" />
         CliniCo
       </h3>
       <ul
         className={isMobile ? "nav-links-mobile" : "nav-links"}
         onClick={() => setIsMobile(false)}
       >
-        <li className="home" onClick={handleHomePage}>
-          Home
-        </li>
-        <li className="about" onClick={handleAboutPage}>
-          About Us
-        </li>
-        <li className="services" onClick={handleServicesPage}>
-          Services
-        </li>
-        <li className="contact" onClick={handleContactPage}>
-          Contact Us
-        </li>
-        <li className="signup" onClick={handleSignUpPage}>
-          Signup
-        </li>
+        <RenderMenu />
       </ul>
 
       <button

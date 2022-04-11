@@ -1,4 +1,3 @@
-//import React from "react";
 import style from "./Centers.module.css";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

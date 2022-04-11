@@ -10,16 +10,16 @@ export const BookSlider = () => {
     <div>
       <Carousel fade>
         <Carousel.Item>
-          <img height="500px" width="100%" src={bookimg1} alt="First slide" />
+          <img height="730px" width="100%" src={bookimg1} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="500px" width="100%" src={bookimg2} alt="First slide" />
+          <img height="730px" width="100%" src={bookimg2} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="500px" width="100%" src={bookimg3} alt="First slide" />
+          <img height="730px" width="100%" src={bookimg3} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="500px" width="100%" src={bookimg4} alt="First slide" />
+          <img height="730px" width="100%" src={bookimg4} alt="First slide" />
         </Carousel.Item>
       </Carousel>
     </div>

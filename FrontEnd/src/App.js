@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Home } from "./components/Pages/Home";
@@ -21,38 +21,65 @@ import { AddDoctor } from "./components/Forms/AddDoctor";
 import { BookAppointment } from "./components/BookAppointment/BookAppointment";
 import { UpdateUser } from "./components/Forms/UpdateUser";
 import { UpdateDoctor } from "./components/Forms/UpdateDoctor";
+import { Logout } from "./components/Logout/Logout";
+import { UserContext } from "./context/context";
+import { initialState, reducer } from "./reducer/UseReducer";
 
-function App() {
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
     <div>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />{" "}
-          <Route path="/about" element={<About />} />{" "}
-          <Route path="/services" element={<Services />} />{" "}
-          <Route path="/contact" element={<Contact />} />{" "}
-          <Route path="/signup" element={<Signup />} />{" "}
-          <Route path="/modal" element={<Modal />} />{" "}
-          <Route path="/registeruser" element={<UserRegistration />} />{" "}
-          <Route path="/loginuser" element={<UserLogin />} />{" "}
-          <Route path="/loginuser" element={<UserLogin />} />{" "}
-          <Route path="/logindoctor" element={<DoctorLogin />} />{" "}
-          <Route path="/loginadmin" element={<AdminLogin />} />{" "}
-          <Route path="/registerdoctor" element={<DoctorRegistration />} />{" "}
-          <Route path="/registeradmin" element={<AdminRegistration />} />{" "}
-          <Route path="/adminmodal" element={<AdminModal />} />{" "}
-          <Route path="/allusers" element={<AllUsers />} />{" "}
-          <Route path="/alldoctors" element={<AllDoctors />} />{" "}
-          <Route path="/adduser" element={<AddUser />} />{" "}
-          <Route path="/adddoctor" element={<AddDoctor />} />{" "}
-          <Route path="/bookappointment" element={<BookAppointment />} />{" "}
-          <Route path="/users/updateUser/:id" element={<UpdateUser />} />{" "}
-          <Route path="/doctors/updateDoctor/:id" element={<UpdateDoctor />} />{" "}
-        </Routes>{" "}
+        <UserContext.Provider value={{ state, dispatch }}>
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />} />{" "}
+            <Route exact path="/about" element={<About />} />{" "}
+            <Route exact path="/services" element={<Services />} />{" "}
+            <Route exact path="/contact" element={<Contact />} />{" "}
+            <Route exact path="/signup" element={<Signup />} />{" "}
+            <Route exact path="/modal" element={<Modal />} />{" "}
+            <Route exact path="/registeruser" element={<UserRegistration />} />{" "}
+            <Route exact path="/loginuser" element={<UserLogin />} />{" "}
+            <Route exact path="/logindoctor" element={<DoctorLogin />} />{" "}
+            <Route exact path="/loginadmin" element={<AdminLogin />} />{" "}
+            <Route
+              exact
+              path="/registerdoctor"
+              element={<DoctorRegistration />}
+            />{" "}
+            <Route
+              exact
+              path="/registeradmin"
+              element={<AdminRegistration />}
+            />{" "}
+            <Route exact path="/adminmodal" element={<AdminModal />} />{" "}
+            <Route exact path="/allusers" element={<AllUsers />} />{" "}
+            <Route exact path="/alldoctors" element={<AllDoctors />} />{" "}
+            <Route exact path="/adduser" element={<AddUser />} />{" "}
+            <Route exact path="/adddoctor" element={<AddDoctor />} />{" "}
+            <Route
+              exact
+              path="/bookappointment"
+              element={<BookAppointment />}
+            />{" "}
+            <Route
+              exact
+              path="/users/updateUser/:id"
+              element={<UpdateUser />}
+            />{" "}
+            <Route
+              exact
+              path="/doctors/updateDoctor/:id"
+              element={<UpdateDoctor />}
+            />{" "}
+            <Route exact path="/" element={<Logout />} />{" "}
+          </Routes>{" "}
+        </UserContext.Provider>
       </Router>{" "}
     </div>
   );
-}
+};
 
 export default App;

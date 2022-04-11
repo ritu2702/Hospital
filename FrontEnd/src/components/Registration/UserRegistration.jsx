@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserRegistration.css";
-import axios from "axios";
-import { baseurl } from "../../api/service";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useForm from "./useForm";
+import validateInfo from "./validateInfo";
 
-export const UserRegistration = () => {
+export const UserRegistration = (submitForm) => {
+  const { handleChange, values, postData, errors } = useForm(
+    validateInfo,
+    submitForm
+  );
   const navigate = useNavigate();
 
   function handlePageChange(e) {
@@ -14,41 +18,12 @@ export const UserRegistration = () => {
     navigate("/loginuser", { replace: true });
   }
 
-  const [info, setInfo] = useState({});
-
-  const handleForm = (e) => {
-    console.log(info);
-    postDataToServer(info);
-    e.preventDefault();
-  };
-
-  const postDataToServer = (data) => {
-    axios.post(`${baseurl}/api/registerUsers`, data).then(
-      (response) => {
-        console.log(response.data);
-        let result = response.data;
-
-        if (result === 0) {
-          console.log("Success");
-          toast.success("Succcesful Registration!");
-        }
-        navigate("/loginuser", { replace: true });
-      },
-      (error) => {
-        console.log(error);
-        toast.error("Please try again", {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-      }
-    );
-  };
-
   return (
     <div className="userfullcontainer">
       <div className="userregister">
         <div className="usercontainer">
           <div className="userregtitle">Registration</div>
-          <form onSubmit={handleForm}>
+          <form onSubmit={postData}>
             <div className="user-details">
               <div className="userinput-box">
                 <span className="userdetails">Name</span>
@@ -57,11 +32,10 @@ export const UserRegistration = () => {
                   placeholder="Enter your full name"
                   name="name"
                   id="name"
-                  onChange={(e) => {
-                    setInfo({ ...info, name: e.target.value });
-                  }}
-                  required
+                  value={values.name}
+                  onChange={handleChange}
                 />
+                {errors.name && <p className="erroruserpara">{errors.name}</p>}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Email</span>
@@ -70,37 +44,49 @@ export const UserRegistration = () => {
                   placeholder="Enter your email"
                   name="email"
                   id="email"
-                  onChange={(e) => {
-                    setInfo({ ...info, email: e.target.value });
-                  }}
-                  required
+                  value={values.email}
+                  onChange={handleChange}
                 />
+                {errors.email && (
+                  <p className="erroruserpara">{errors.email}</p>
+                )}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Mobile No</span>
                 <input
-                  type="text"
-                  placeholder="Enter your number"
+                  type="tel"
+                  placeholder="+91- 7499031115"
                   name="mobileNo"
                   id="mobileNo"
-                  onChange={(e) => {
-                    setInfo({ ...info, mobileNo: e.target.value });
-                  }}
-                  required
+                  value={values.mobileNo}
+                  onChange={handleChange}
                 />
+                {errors.mobileNo && (
+                  <p className="erroruserpara">{errors.mobileNo}</p>
+                )}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Blood Group</span>
-                <input
-                  type="text"
-                  placeholder="Enter your blood group"
+                <select
+                  className="bloodGroupStyle"
                   name="bloodGroup"
                   id="bloodGroup"
-                  onChange={(e) => {
-                    setInfo({ ...info, bloodGroup: e.target.value });
-                  }}
-                  required
-                />
+                  value={values.bloodGroup}
+                  onChange={handleChange}
+                >
+                  <option>Select Your BloodGroup</option>
+                  <option>A+</option>
+                  <option>A-</option>
+                  <option>B+</option>
+                  <option>B-</option>
+                  <option>O+</option>
+                  <option>O-</option>
+                  <option>AB+</option>
+                  <option>AB-</option>
+                </select>
+                {errors.bloodGroup && (
+                  <p className="erroruserpara">{errors.bloodGroup}</p>
+                )}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Age</span>
@@ -108,12 +94,10 @@ export const UserRegistration = () => {
                   type="number"
                   name="age"
                   id="age"
-                  placeholder="Enter your age"
-                  onChange={(e) => {
-                    setInfo({ ...info, age: e.target.value });
-                  }}
-                  required
+                  value={values.age}
+                  onChange={handleChange}
                 />
+                {errors.age && <p className="erroruserpara">{errors.age}</p>}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Address</span>
@@ -124,10 +108,12 @@ export const UserRegistration = () => {
                   id="address"
                   cols="30"
                   rows="1"
-                  onChange={(e) => {
-                    setInfo({ ...info, address: e.target.value });
-                  }}
+                  value={values.address}
+                  onChange={handleChange}
                 ></textarea>
+                {errors.address && (
+                  <p className="erroruserpara">{errors.address}</p>
+                )}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Password</span>
@@ -136,11 +122,12 @@ export const UserRegistration = () => {
                   name="password"
                   id="password"
                   placeholder="Enter password"
-                  onChange={(e) => {
-                    setInfo({ ...info, password: e.target.value });
-                  }}
-                  required
+                  value={values.password}
+                  onChange={handleChange}
                 />
+                {errors.password && (
+                  <p className="erroruserpara">{errors.password}</p>
+                )}
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Confirm Password</span>
@@ -149,11 +136,12 @@ export const UserRegistration = () => {
                   placeholder="Re-Enter Password"
                   name="confirmPassword"
                   id="confirmPassword"
-                  onChange={(e) => {
-                    setInfo({ ...info, confirmPassword: e.target.value });
-                  }}
-                  required
+                  value={values.confirmPassword}
+                  onChange={handleChange}
                 />
+                {errors.confirmPassword && (
+                  <p className="erroruserpara">{errors.confirmPassword}</p>
+                )}
               </div>
             </div>
             <div className="userbutton">

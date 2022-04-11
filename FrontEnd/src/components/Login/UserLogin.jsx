@@ -8,42 +8,42 @@ import axios from "axios";
 import { baseurl } from "../../api/service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../context/context";
+import { useContext } from "react";
 
 export const UserLogin = () => {
+  const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
+  const [user, setUser] = useState({});
 
   const handlePageChange = (e) => {
     e.preventDefault();
     navigate("/registeruser", { replace: true });
   };
 
-  const [user, setUser] = useState({});
-
   const handleUserForm = (e) => {
-    console.log(user);
-    postDataToServer(user);
     e.preventDefault();
+    postDataToServer(user);
   };
-
   const postDataToServer = (data) => {
-    axios.post(`${baseurl}/api/login`, data).then(
-      (response) => {
+    console.log(data);
+    if (data !== null) {
+      axios.post(`${baseurl}/api/login`, data).then((response) => {
         console.log(response.data);
         let result = response.data;
 
         if (result === 0) {
           console.log("Success");
           toast.success("Succcesful Login!");
+          navigate("/bookappointment", { replace: true });
+        } else {
+          toast.error("Enter Valid Email-Id or Password", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         }
-        navigate("/bookappointment", { replace: true });
-      },
-      (error) => {
-        console.log(error);
-        toast.error("Please try again", {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-      }
-    );
+        dispatch({ type: "USER", payload: true });
+      });
+    }
   };
 
   return (
@@ -56,14 +56,12 @@ export const UserLogin = () => {
               size="3x"
               className="icon-logo"
             ></FontAwesomeIcon>
-            {console.log("User", user)}
             <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
               id="email"
               placeholder="Enter your Email"
-              value={user.email}
               onChange={(e) => {
                 setUser({ ...user, email: e.target.value });
               }}
@@ -74,7 +72,6 @@ export const UserLogin = () => {
               name="password"
               id="password"
               placeholder="Enter Password"
-              value={user.password}
               onChange={(e) => {
                 setUser({ ...user, password: e.target.value });
               }}
@@ -99,7 +96,7 @@ export const UserLogin = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

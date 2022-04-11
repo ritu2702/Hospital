@@ -14,28 +14,28 @@ export const Slider = () => {
     <div>
       <Carousel fade>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img1} alt="First slide" />
+          <img height="750px" width="100%" src={img1} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img2} alt="First slide" />
+          <img height="750px" width="100%" src={img2} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img3} alt="First slide" />
+          <img height="750px" width="100%" src={img3} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img4} alt="First slide" />
+          <img height="750px" width="100%" src={img4} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img5} alt="First slide" />
+          <img height="750px" width="100%" src={img5} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img6} alt="First slide" />
+          <img height="750px" width="100%" src={img6} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img7} alt="First slide" />
+          <img height="750px" width="100%" src={img7} alt="First slide" />
         </Carousel.Item>
         <Carousel.Item>
-          <img height="650px" width="100%" src={img8} alt="First slide" />
+          <img height="750px" width="100%" src={img8} alt="First slide" />
         </Carousel.Item>
       </Carousel>
     </div>
