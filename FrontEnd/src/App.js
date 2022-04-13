@@ -24,6 +24,7 @@ import { UpdateDoctor } from "./components/Forms/UpdateDoctor";
 import { Logout } from "./components/Logout/Logout";
 import { UserContext } from "./context/context";
 import { initialState, reducer } from "./reducer/UseReducer";
+import AppointmentModal from "./components/Appointment/AppointmentModal";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -75,8 +76,9 @@ const App = () => {
               element={<UpdateDoctor />}
             />{" "}
             <Route exact path="/" element={<Logout />} />{" "}
+            <Route exact path="/appointment" element={<AppointmentModal />} />{" "}
           </Routes>{" "}
-        </UserContext.Provider>
+        </UserContext.Provider>{" "}
       </Router>{" "}
     </div>
   );

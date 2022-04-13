@@ -122,7 +122,7 @@ export const AllDoctors = () => {
           Back
         </button>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

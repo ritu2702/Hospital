@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import welcome from "../../images/welcome.jpg";
@@ -10,20 +10,42 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../context/context";
 import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 export const UserLogin = () => {
   const { state, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Must be valid Email")
+      .max(255)
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password required")
+      .min(4, "Minimum 4 characters required"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const handlePageChange = (e) => {
     e.preventDefault();
     navigate("/registeruser", { replace: true });
   };
 
-  const handleUserForm = (e) => {
-    e.preventDefault();
-    postDataToServer(user);
+  const onSubmit = (data) => {
+    postDataToServer(data);
   };
   const postDataToServer = (data) => {
     console.log(data);
@@ -36,12 +58,14 @@ export const UserLogin = () => {
           console.log("Success");
           toast.success("Succcesful Login!");
           navigate("/bookappointment", { replace: true });
-        } else {
-          toast.error("Enter Valid Email-Id or Password", {
+        }
+        dispatch({ type: "USER", payload: true });
+        if (result === 1) {
+          console.log("Failed");
+          toast.error("Please Enter valid Email-id or Password", {
             position: toast.POSITION.TOP_CENTER,
           });
         }
-        dispatch({ type: "USER", payload: true });
       });
     }
   };
@@ -50,7 +74,7 @@ export const UserLogin = () => {
     <div className="main-login">
       <div className="login-contain">
         <div className="left-side">
-          <form onSubmit={handleUserForm}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FontAwesomeIcon
               icon={faUserGroup}
               size="3x"
@@ -62,20 +86,18 @@ export const UserLogin = () => {
               name="email"
               id="email"
               placeholder="Enter your Email"
-              onChange={(e) => {
-                setUser({ ...user, email: e.target.value });
-              }}
+              {...register("email")}
             />
+            <p className="errorMessagesUser">{errors.email?.message}</p>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
               id="password"
               placeholder="Enter Password"
-              onChange={(e) => {
-                setUser({ ...user, password: e.target.value });
-              }}
+              {...register("password")}
             />
+            <p className="errorMessagesUser">{errors.password?.message}</p>
             <button type="submit" id="btn">
               Login
             </button>

@@ -5,18 +5,17 @@
 .register {
     margin: auto;
     display: flex;
-    height: 655px;
-    width: 50%;
+    height: 900px;
+    width: 40%;
     justify-content: center;
     align-items: center;
     padding: 10px;
 }
 
 .container {
-    margin-top: 50px;
-    max-width: 700px;
+    max-width: 400px;
     width: 70%;
-    height: 500px;
+    height: 600px;
     background-color: white;
     color: black;
     padding: 25px 30px;

@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminRegistration.css";
 import axios from "axios";
 import { baseurl } from "../../api/service";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 export const AdminRegistration = () => {
   const navigate = useNavigate();
+
+  const schema = yup.object().shape({
+    name: yup
+      .string()
+      .required("Name is required")
+      .min(4, "Name should be more than 3 characters"),
+    email: yup
+      .string()
+      .email("Must be valid Email")
+      .max(255)
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password required")
+      .min(4, "Minimum 4 characters required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Password must match"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   function handlePageChange(e) {
     e.preventDefault();
     navigate("/loginadmin", { replace: true });
   }
 
-  const [info, setInfo] = useState({});
-
-  const handleForm = (e) => {
-    console.log(info);
-    postDataToServer(info);
-    e.preventDefault();
+  const onSubmit = (data) => {
+    console.log(data);
+    postDataToServer(data);
   };
 
   const postDataToServer = (data) => {
@@ -37,7 +64,7 @@ export const AdminRegistration = () => {
       <div className="register">
         <div className="container">
           <div className="regtitle">Registration</div>
-          <form onSubmit={handleForm}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="user-details">
               <div className="input-box">
                 <span className="details">Name</span>
@@ -46,11 +73,9 @@ export const AdminRegistration = () => {
                   placeholder="Enter your full name"
                   name="name"
                   id="name"
-                  onChange={(e) => {
-                    setInfo({ ...info, name: e.target.value });
-                  }}
-                  required
+                  {...register("name")}
                 />
+                <p className="errorMessagesUser">{errors.name?.message}</p>
               </div>
               <div className="input-box">
                 <span className="details">Email</span>
@@ -59,11 +84,9 @@ export const AdminRegistration = () => {
                   placeholder="Enter your email"
                   name="email"
                   id="email"
-                  onChange={(e) => {
-                    setInfo({ ...info, email: e.target.value });
-                  }}
-                  required
+                  {...register("email")}
                 />
+                <p className="errorMessagesUser">{errors.email?.message}</p>
               </div>
               <div className="input-box">
                 <span className="details">Password</span>
@@ -72,11 +95,9 @@ export const AdminRegistration = () => {
                   name="password"
                   id="password"
                   placeholder="Enter password"
-                  onChange={(e) => {
-                    setInfo({ ...info, password: e.target.value });
-                  }}
-                  required
+                  {...register("password")}
                 />
+                <p className="errorMessagesUser">{errors.password?.message}</p>
               </div>
               <div className="input-box">
                 <span className="details">Confirm Password</span>
@@ -85,11 +106,11 @@ export const AdminRegistration = () => {
                   placeholder="Re-Enter Password"
                   name="confirmPassword"
                   id="confirmPassword"
-                  onChange={(e) => {
-                    setInfo({ ...info, confirmPassword: e.target.value });
-                  }}
-                  required
+                  {...register("confirmPassword")}
                 />
+                <p className="errorMessagesUser">
+                  {errors.confirmPassword?.message}
+                </p>
               </div>
             </div>
             <div className="button">

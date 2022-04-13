@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import welcome from "../../images/welcome.jpg";
@@ -8,72 +8,92 @@ import axios from "axios";
 import { baseurl } from "../../api/service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 export const DoctorLogin = () => {
   const navigate = useNavigate();
+
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Must be valid Email")
+      .max(255)
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password required")
+      .max(4, "Maximum 4 characters required"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const handlePageChange = (e) => {
     e.preventDefault();
     navigate("/registerdoctor", { replace: true });
   };
 
-  const [user, setUser] = useState({});
-
-  const handleDoctorForm = (e) => {
-    console.log(user);
-    postDataToServer(user);
-    e.preventDefault();
+  const onSubmit = (data) => {
+    console.log(data);
+    postDataToServer(data);
   };
 
   const postDataToServer = (data) => {
-    axios.post(`${baseurl}/api/doctorLogin`, data).then(
-      (response) => {
-        console.log(response);
+    axios.post(`${baseurl}/api/doctorLogin`, data).then((response) => {
+      console.log(response);
+      let result = response.data;
+      console.log(result);
+      if (result === 0) {
         console.log("Success");
-        toast.success("Succcesful Login!");
-      },
-      (error) => {
-        console.log(error);
-        toast.error("Please try again", {
-          position: toast.POSITION.BOTTOM_LEFT,
+        toast.success("Succcesful Login!", {
+          position: toast.POSITION.TOP_CENTER,
         });
       }
-    );
+      if (result === 1) {
+        console.log("Fail");
+        toast.error("Please Enter Valid Email-Id or Password", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    });
   };
 
   return (
     <div className="main-login">
       <div className="login-contain">
         <div className="left-side">
-          <form onSubmit={handleDoctorForm}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FontAwesomeIcon
               icon={faUserGroup}
               size="3x"
               className="icon-logo"
             ></FontAwesomeIcon>
-            {console.log("User", user)}
+
             <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
               id="email"
               placeholder="Enter your Email"
-              value={user.email}
-              onChange={(e) => {
-                setUser({ ...user, email: e.target.value });
-              }}
+              {...register("email")}
             />
+            <p className="errorMessagesUser">{errors.email?.message}</p>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
               id="password"
               placeholder="Enter Password"
-              value={user.password}
-              onChange={(e) => {
-                setUser({ ...user, password: e.target.value });
-              }}
+              {...register("password")}
             />
+            <p className="errorMessagesUser">{errors.password?.message}</p>
             <button type="submit" id="btn">
               Login
             </button>
@@ -94,7 +114,7 @@ export const DoctorLogin = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

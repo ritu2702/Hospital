@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import welcome from "../../images/welcome.jpg";
@@ -8,83 +8,100 @@ import axios from "axios";
 import { baseurl } from "../../api/service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../context/context";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 export const AdminLogin = () => {
   const navigate = useNavigate();
+
+  const { state, dispatch } = useContext(UserContext);
+
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Must be valid Email")
+      .max(255)
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password required")
+      .max(4, "Maximum 4 characters required"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const handlePageChange = (e) => {
     e.preventDefault();
     navigate("/registeradmin", { replace: true });
   };
 
-  const [user, setUser] = useState({});
-
-  const handleAdminForm = (e) => {
-    console.log(user);
-    postDataToServer(user);
-    e.preventDefault();
+  const onSubmit = (data) => {
+    console.log(data);
+    postDataToServer(data);
   };
 
   const postDataToServer = (data) => {
-    axios.post(`${baseurl}/api/adminLogin`, data).then(
-      (response) => {
+    if (data !== null) {
+      axios.post(`${baseurl}/api/adminLogin`, data).then((response) => {
         console.log(response.data);
 
         let result = response.data;
 
         if (result === 0) {
           console.log("Success");
-          toast.success("Succcesful Login!");
+          toast.success("Succcesful Login!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/adminmodal", { replace: true });
         }
-      },
-      (error) => {
-        console.log(error);
-        toast.error("Please try again", {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-      }
-    );
+        if (result === 1) {
+          console.log("Fail");
+          toast.error("Please Enter Valid Email-id password", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+      });
+    }
+    dispatch({ type: "USER", payload: true });
   };
-  const handlepageChangeModal = (e) => {
-    e.preventDefault();
-    navigate("/adminmodal", { replace: true });
-  };
-
   return (
     <div className="main-login">
       <div className="login-contain">
         <div className="left-side">
-          <form onSubmit={handleAdminForm}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FontAwesomeIcon
               icon={faUserGroup}
               size="3x"
               className="icon-logo"
             ></FontAwesomeIcon>
-            {console.log("User", user)}
             <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
               id="email"
               placeholder="Enter your Email"
-              value={user.email}
-              onChange={(e) => {
-                setUser({ ...user, email: e.target.value });
-              }}
+              {...register("email")}
             />
+            <p className="errorMessagesUser">{errors.email?.message}</p>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
               id="password"
               placeholder="Enter Password"
-              value={user.password}
-              onChange={(e) => {
-                setUser({ ...user, password: e.target.value });
-              }}
+              {...register("password")}
             />
-            <button type="submit" id="btn" onClick={handlepageChangeModal}>
+            <p className="errorMessagesUser">{errors.password?.message}</p>
+            <button type="submit" id="btn">
               Login
             </button>
           </form>
@@ -104,7 +121,7 @@ export const AdminLogin = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

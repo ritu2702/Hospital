@@ -7,8 +7,16 @@ import {
   faFileMedical,
   faHouseMedical,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export const BookBlocks = () => {
+  const navigate = useNavigate();
+
+  const handlePageChange = (e) => {
+    e.preventDefault();
+    navigate("/appointment", { replace: true });
+  };
+
   return (
     <div class="bookcontainer">
       <div>
@@ -22,12 +30,14 @@ export const BookBlocks = () => {
       <div class="bookbox">
         <div class="bookicon">
           <FontAwesomeIcon
-            icon={faFlaskVial}
+            icon={faFileMedical}
             size="3x"
             className="bookFontIcon"
           ></FontAwesomeIcon>
-          <h3 className="bookText">Book Lab Test</h3>
-          <button class="bookbtn">Select</button>
+          <h3 className="bookText">Book Appointment</h3>
+          <button class="bookbtn" onClick={handlePageChange}>
+            Select
+          </button>
         </div>
       </div>
       <div class="bookbox">
@@ -44,11 +54,11 @@ export const BookBlocks = () => {
       <div class="bookbox">
         <div class="bookicon">
           <FontAwesomeIcon
-            icon={faFileMedical}
+            icon={faFlaskVial}
             size="3x"
             className="bookFontIcon"
           ></FontAwesomeIcon>
-          <h3 className="bookText">Book an appointment</h3>
+          <h3 className="bookText">Book Lab Test</h3>
           <button class="bookbtn">Select</button>
         </div>
       </div>

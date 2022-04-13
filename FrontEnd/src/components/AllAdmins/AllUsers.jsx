@@ -41,8 +41,6 @@ export const AllUsers = () => {
         const result = response;
         if (result === 0) {
           toast.success("Entry Deleted");
-        } else {
-          toast.dark("Data not Deleted");
         }
       },
       (error) => {
@@ -129,7 +127,7 @@ export const AllUsers = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

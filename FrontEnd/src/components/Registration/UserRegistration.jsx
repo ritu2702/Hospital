@@ -3,27 +3,87 @@ import { useNavigate } from "react-router-dom";
 import "./UserRegistration.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useForm from "./useForm";
-import validateInfo from "./validateInfo";
+import axios from "axios";
+import { baseurl } from "../../api/service";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import "yup-phone";
 
-export const UserRegistration = (submitForm) => {
-  const { handleChange, values, postData, errors } = useForm(
-    validateInfo,
-    submitForm
-  );
+export const UserRegistration = () => {
   const navigate = useNavigate();
+
+  const schema = yup.object().shape({
+    name: yup
+      .string()
+      .required("Name is required")
+      .min(4, "Name should be more than 3 characters"),
+    email: yup
+      .string()
+      .email("Must be valid Email")
+      .max(255)
+      .required("Email is required"),
+    mobileNo: yup.string().phone("IN").required("Mobile Number required"),
+    bloodGroup: yup.string().nullable().required("BloodGroup is required"),
+    age: yup.number().required("Age required"),
+    address: yup.string().required("Address required"),
+    password: yup
+      .string()
+      .required("Password required")
+      .min(4, "Minimum 4 characters required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Password must match"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   function handlePageChange(e) {
     e.preventDefault();
     navigate("/loginuser", { replace: true });
   }
 
+  const onSubmit = (data) => {
+    console.log(data);
+    postDataToServer(data);
+  };
+
+  const postDataToServer = (data) => {
+    console.log(data);
+    axios
+      .post(`${baseurl}/api/registerUsers`, data)
+      .then((response) => {
+        console.log(response.data);
+        let result = response.data;
+
+        if (result === 0) {
+          console.log("Success");
+          toast.success("Succcesful Registration!");
+        } else {
+          console.log("error");
+          toast.error("Please try again");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate("/loginuser", { replace: true });
+  };
+
   return (
     <div className="userfullcontainer">
       <div className="userregister">
         <div className="usercontainer">
           <div className="userregtitle">Registration</div>
-          <form onSubmit={postData}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="user-details">
               <div className="userinput-box">
                 <span className="userdetails">Name</span>
@@ -32,10 +92,9 @@ export const UserRegistration = (submitForm) => {
                   placeholder="Enter your full name"
                   name="name"
                   id="name"
-                  value={values.name}
-                  onChange={handleChange}
+                  {...register("name")}
                 />
-                {errors.name && <p className="erroruserpara">{errors.name}</p>}
+                <p className="errorMessagesUser">{errors.name?.message}</p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Email</span>
@@ -44,12 +103,9 @@ export const UserRegistration = (submitForm) => {
                   placeholder="Enter your email"
                   name="email"
                   id="email"
-                  value={values.email}
-                  onChange={handleChange}
+                  {...register("email")}
                 />
-                {errors.email && (
-                  <p className="erroruserpara">{errors.email}</p>
-                )}
+                <p className="errorMessagesUser">{errors.email?.message}</p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Mobile No</span>
@@ -58,12 +114,9 @@ export const UserRegistration = (submitForm) => {
                   placeholder="+91- 7499031115"
                   name="mobileNo"
                   id="mobileNo"
-                  value={values.mobileNo}
-                  onChange={handleChange}
+                  {...register("mobileNo")}
                 />
-                {errors.mobileNo && (
-                  <p className="erroruserpara">{errors.mobileNo}</p>
-                )}
+                <p className="errorMessagesUser">{errors.mobileNo?.message}</p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Blood Group</span>
@@ -71,22 +124,21 @@ export const UserRegistration = (submitForm) => {
                   className="bloodGroupStyle"
                   name="bloodGroup"
                   id="bloodGroup"
-                  value={values.bloodGroup}
-                  onChange={handleChange}
+                  {...register("bloodGroup")}
                 >
-                  <option>Select Your BloodGroup</option>
-                  <option>A+</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
+                  <option value="">--Select Your BloodGroup--</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
                 </select>
-                {errors.bloodGroup && (
-                  <p className="erroruserpara">{errors.bloodGroup}</p>
-                )}
+                <p className="errorMessagesUser">
+                  {errors.bloodGroup?.message}
+                </p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Age</span>
@@ -94,10 +146,10 @@ export const UserRegistration = (submitForm) => {
                   type="number"
                   name="age"
                   id="age"
-                  value={values.age}
-                  onChange={handleChange}
+                  placeholder="Enter your age"
+                  {...register("age")}
                 />
-                {errors.age && <p className="erroruserpara">{errors.age}</p>}
+                <p className="errorMessagesUser">{errors.age?.message}</p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Address</span>
@@ -108,12 +160,9 @@ export const UserRegistration = (submitForm) => {
                   id="address"
                   cols="30"
                   rows="1"
-                  value={values.address}
-                  onChange={handleChange}
+                  {...register("address")}
                 ></textarea>
-                {errors.address && (
-                  <p className="erroruserpara">{errors.address}</p>
-                )}
+                <p className="errorMessagesUser">{errors.address?.message}</p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Password</span>
@@ -122,12 +171,9 @@ export const UserRegistration = (submitForm) => {
                   name="password"
                   id="password"
                   placeholder="Enter password"
-                  value={values.password}
-                  onChange={handleChange}
+                  {...register("password")}
                 />
-                {errors.password && (
-                  <p className="erroruserpara">{errors.password}</p>
-                )}
+                <p className="errorMessagesUser">{errors.password?.message}</p>
               </div>
               <div className="userinput-box">
                 <span className="userdetails">Confirm Password</span>
@@ -136,12 +182,11 @@ export const UserRegistration = (submitForm) => {
                   placeholder="Re-Enter Password"
                   name="confirmPassword"
                   id="confirmPassword"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
+                  {...register("confirmPassword")}
                 />
-                {errors.confirmPassword && (
-                  <p className="erroruserpara">{errors.confirmPassword}</p>
-                )}
+                <p className="errorMessagesUser">
+                  {errors.confirmPassword?.message}
+                </p>
               </div>
             </div>
             <div className="userbutton">
@@ -154,7 +199,7 @@ export const UserRegistration = (submitForm) => {
           </form>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

@@ -80,7 +80,6 @@ export const UpdateUser = () => {
                   id="name"
                   value={user.name}
                   onChange={(e) => handleChange(e)}
-                  required
                 />
               </div>
               <div className="adduserinput-box">
@@ -92,7 +91,6 @@ export const UpdateUser = () => {
                   id="email"
                   value={user.email}
                   onChange={(e) => handleChange(e)}
-                  required
                 />
               </div>
               <div className="adduserinput-box">
@@ -104,20 +102,28 @@ export const UpdateUser = () => {
                   id="mobileNo"
                   value={user.mobileNo}
                   onChange={(e) => handleChange(e)}
-                  required
                 />
               </div>
               <div className="adduserinput-box">
                 <span className="adduserdetails">Blood Group</span>
-                <input
-                  type="text"
-                  placeholder="Enter your blood group"
+                <select
+                  className="bloodGroupAddStyle"
                   name="bloodGroup"
                   id="bloodGroup"
                   value={user.bloodGroup}
                   onChange={(e) => handleChange(e)}
-                  required
-                />
+                >
+                  <option value="">--Select Your BloodGroup--</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                </select>
+                <p className="errorMessagesUser"></p>
               </div>
               <div className="adduserinput-box">
                 <span className="adduserdetails">Age</span>
@@ -128,7 +134,6 @@ export const UpdateUser = () => {
                   placeholder="Enter your age"
                   value={user.age}
                   onChange={(e) => handleChange(e)}
-                  required
                 />
               </div>
               <div className="adduserinput-box">
@@ -153,7 +158,6 @@ export const UpdateUser = () => {
                   placeholder="Enter password"
                   value={user.password}
                   onChange={(e) => handleChange(e)}
-                  required
                 />
               </div>
               <div className="adduserinput-box">
@@ -165,7 +169,6 @@ export const UpdateUser = () => {
                   id="confirmPassword"
                   value={user.confirmPassword}
                   onChange={(e) => handleChange(e)}
-                  required
                 />
               </div>
             </div>
