@@ -16,6 +16,10 @@ export const Fetaures = () => {
     e.preventDefault();
     navigate("/registeruser");
   };
+  const handleDoctorProfile = (e) => {
+    e.preventDefault();
+    navigate("/doctorprofile");
+  };
 
   return (
     <div>
@@ -40,8 +44,8 @@ export const Fetaures = () => {
                   icon={faUserDoctor}
                   size="3x"
                 ></FontAwesomeIcon>
-                <h1>Book Health Check</h1>
-                <p>Booking Health Check-up </p>
+                <h1 onClick={handleDoctorProfile}>Doctor Details</h1>
+                <p>All Doctors </p>
               </div>
             </div>
             <div className="features-box">

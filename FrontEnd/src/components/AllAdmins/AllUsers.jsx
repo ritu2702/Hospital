@@ -58,6 +58,9 @@ export const AllUsers = () => {
   function backModalPage() {
     navigate("/adminmodal", { replace: true });
   }
+  function RefreshModalPage() {
+    navigate("/allusers", { replace: true });
+  }
 
   return (
     <div>
@@ -112,18 +115,17 @@ export const AllUsers = () => {
               </tbody>
             </table>
 
-            <button
-              className="adduserbutton btn btn-info"
-              onClick={addUserPage}
-            >
-              Add User
-            </button>
-            <button
-              className="backuserbutton btn btn-dark"
-              onClick={backModalPage}
-            >
-              Back
-            </button>
+            <div className="adduser">
+              <button className="btn btn-info" onClick={addUserPage}>
+                Add User
+              </button>
+              <button className=" btn btn-dark ml-3" onClick={backModalPage}>
+                Back
+              </button>
+              <button className=" btn btn-dark ml-3" onClick={RefreshModalPage}>
+                Refresh
+              </button>
+            </div>
           </div>
         </div>
       </div>

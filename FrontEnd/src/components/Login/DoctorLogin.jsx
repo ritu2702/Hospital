@@ -24,7 +24,7 @@ export const DoctorLogin = () => {
     password: yup
       .string()
       .required("Password required")
-      .max(4, "Maximum 4 characters required"),
+      .min(4, "Maximum 4 characters required"),
   });
 
   const {
@@ -49,12 +49,17 @@ export const DoctorLogin = () => {
     axios.post(`${baseurl}/api/doctorLogin`, data).then((response) => {
       console.log(response);
       let result = response.data;
+      console.log(
+        localStorage.setItem("doctor", JSON.stringify(response.data))
+      );
+      localStorage.setItem("doctor", JSON.stringify(response.data.name));
       console.log(result);
-      if (result === 0) {
+      if (result !== null) {
         console.log("Success");
         toast.success("Succcesful Login!", {
           position: toast.POSITION.TOP_CENTER,
         });
+        navigate("/appointmentdoctor", { replace: true });
       }
       if (result === 1) {
         console.log("Fail");

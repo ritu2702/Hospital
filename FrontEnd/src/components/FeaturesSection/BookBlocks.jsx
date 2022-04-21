@@ -12,9 +12,10 @@ import { useNavigate } from "react-router-dom";
 export const BookBlocks = () => {
   const navigate = useNavigate();
 
-  const handlePageChange = (e) => {
-    e.preventDefault();
-    navigate("/appointment", { replace: true });
+  const handlePageChange = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+    navigate("/appointModal", { replace: true });
   };
 
   return (

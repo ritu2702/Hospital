@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.appointbody {
+    height: 100%;
+    width: 900px;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.allappointcontainer {
+    margin: auto;
+    padding: 0 30px;
+}
+
+.allappointcontainer .appointlist {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 40px;
+    font-weight: 500;
+    text-transform: capitalize;
+    text-decoration: underline pink;
+    color: rgb(241, 6, 85);
+}
+
+.appointtable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.appointtable thead {
+    background-color: rgb(232, 78, 129);
+    color: white;
+}
+
+.appointtable thead tr th {
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: medium;
+    letter-spacing: 0.35px;
+    padding: 12px;
+    opacity: 1;
+    vertical-align: top;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.appointtable tbody tr td {
+    font-size: 16px;
+    letter-spacing: 0.35px;
+    font-weight: normal;
+    color: black;
+    background-color: white;
+    padding: 12px;
+    text-align: center;
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+.appointmentbutton {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    overflow: hidden;
+    margin-left: 650px;
+}

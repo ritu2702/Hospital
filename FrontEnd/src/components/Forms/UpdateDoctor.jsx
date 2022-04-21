@@ -112,15 +112,34 @@ export const UpdateDoctor = () => {
               </div>
               <div className="adddoctorinput-box">
                 <span className="adddoctordetails">Speciality</span>
-                <input
-                  type="text"
-                  placeholder="Enter your Speciality"
+                <select
                   name="speciality"
                   id="speciality"
+                  className="selectSpecialityadd"
                   value={doctor.speciality}
                   onChange={(e) => handleChange(e)}
-                  required
-                />
+                >
+                  <option value="">--Select Speciality--</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Oncology">Oncology</option>
+                  <option value="Neurology">Neurology</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="Gynaecology">Gynaecology</option>
+                  <option value="Orthopaedics">Orthopaedics</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="Diabetology">Diabetology</option>
+                  <option value="Endocrinology">Endocrinology</option>
+                  <option value="Ent">Ent</option>
+                  <option value="General Physician">General Physician</option>
+                  <option value="General Surgery">General Surgery</option>
+                  <option value="Nephrology">Nephrology</option>
+                  <option value="Neurosurgery">Neurosurgery</option>
+                  <option value="Urology">Urologuy</option>
+                  <option value="Opthamology">Opthamology</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Psychiatry">Psychaitry</option>
+                  <option value="Pulmonology">Pulmonology</option>
+                </select>
               </div>
               <div className="adddoctorinput-box">
                 <span className="adddoctordetails">Qualification</span>
@@ -210,7 +229,7 @@ export const UpdateDoctor = () => {
           </form>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
     </div>
   );
 };

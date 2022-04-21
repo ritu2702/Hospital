@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AppointmentModal.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,6 +12,22 @@ import * as yup from "yup";
 
 const AppointmentModal = () => {
   const navigate = useNavigate();
+
+  const [appoint, setAppoint] = useState([]);
+
+  useEffect(() => {
+    const getSpeciality = async () => {
+      try {
+        const response = await axios.get(`${baseurl}/api/doctors`);
+        console.log(response.data);
+        setAppoint(response.data);
+        console.log(appoint);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getSpeciality();
+  }, []);
 
   const schema = yup.object().shape({
     name: yup
@@ -27,17 +43,9 @@ const AppointmentModal = () => {
       .email("Must be valid Email")
       .max(255)
       .required("Email is required"),
-    speciality: yup.string().required("Speciality is required"),
-    paymentStatus: yup
-      .string()
-      .nullable()
-      .required("Payment Status is required"),
+    speciality: yup.string().nullable().required("Speciality is required"),
     timeofapp: yup.string().required("Time is required"),
-    dateofapp: yup
-      .date()
-      .nullable()
-      .transform((curr, orig) => (orig === "" ? null : curr))
-      .required("Date is required"),
+    dateofapp: yup.date().nullable().required("Date is required"),
     patientProblem: yup.string().required("Problem is required"),
   });
 
@@ -64,7 +72,7 @@ const AppointmentModal = () => {
 
         if (result === 0) {
           console.log("Success");
-          toast.success("Appointment Booked!");
+          toast.success("Appointment Registered!");
         }
         if (result === 1) {
           console.log("fail");
@@ -105,19 +113,6 @@ const AppointmentModal = () => {
                   <p className="errorMessagesUser">{errors.name?.message}</p>
                 </div>
                 <div className="modalinput-box">
-                  <span className="modaldetails">Doctor Name</span>
-                  <input
-                    type="text"
-                    placeholder="Enter your Doctor name"
-                    name="doctorname"
-                    id="doctorname"
-                    {...register("doctorname")}
-                  />
-                  <p className="errorMessagesUser">
-                    {errors.doctorname?.message}
-                  </p>
-                </div>
-                <div className="modalinput-box">
                   <span className="modaldetails">Email</span>
                   <input
                     type="email"
@@ -130,15 +125,47 @@ const AppointmentModal = () => {
                 </div>
                 <div className="modalinput-box">
                   <span className="modaldetails">Speciality</span>
-                  <input
-                    type="text"
-                    placeholder="Enter speciality"
+                  <select
                     name="speciality"
                     id="speciality"
+                    className="selectSpecialityapp"
                     {...register("speciality")}
-                  />
+                  >
+                    <option value="">--Select Speciality--</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Oncology">Oncology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Gastroenterology">Gastroenterology</option>
+                    <option value="Gynaecology">Gynaecology</option>
+                    <option value="Orthopaedics">Orthopaedics</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Diabetology">Diabetology</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Ent">Ent</option>
+                    <option value="General Physician">General Physician</option>
+                    <option value="General Surgery">General Surgery</option>
+                  </select>
                   <p className="errorMessagesUser">
                     {errors.speciality?.message}
+                  </p>
+                </div>
+                <div className="modalinput-box">
+                  <span className="modaldetails">Doctor Name</span>
+                  <select
+                    name="doctorname"
+                    id="doctorname"
+                    className="selectSpecialityapp"
+                    {...register("doctorname")}
+                  >
+                    <option value="">--Select Doctor--</option>
+                    {appoint.map((appointment) => (
+                      <option key={appointment.id} value={appointment.id}>
+                        {appointment.name}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="errorMessagesUser">
+                    {errors.doctorname?.message}
                   </p>
                 </div>
                 <div className="modalinput-box">
@@ -180,27 +207,11 @@ const AppointmentModal = () => {
                     {errors.patientProblem?.message}
                   </p>
                 </div>
-                <div className="modalinput-box">
-                  <span className="modaldetails">Payment Status</span>
-                  <select
-                    name="paymentStatus"
-                    id="paymentStatus"
-                    className="selectPayment"
-                    {...register("paymentStatus")}
-                  >
-                    <option value="">--Select Status--</option>
-                    <option value="Paid">Paid</option>
-                    <option value="Pending">Pending</option>
-                  </select>
-                  <p className="errorMessagesUser">
-                    {errors.paymentStatus?.message}
-                  </p>
-                </div>
               </div>
               <div className="modalFooter">
                 <button type="reset">Clear</button>
                 <button type="submit">Book</button>
-                <button onClick={handlePageChange}>Cancel</button>
+                <button onClick={handlePageChange}>Back</button>
               </div>
             </form>
           </div>

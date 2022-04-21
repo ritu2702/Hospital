@@ -93,8 +93,20 @@ form .doctoruser-details .doctorinput-box {
     transition: all 0.3s ease;
 }
 
+.selectSpeciality {
+    height: 45px;
+    width: 99%;
+    outline: none;
+    border-radius: 5px;
+    border: 3px solid purple;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
 .doctorcontainer form .doctoruser-details input:focus,
-.doctorcontainer form .doctoruser-details input:valid {
+.doctorcontainer form .doctoruser-details input:hover {
     border-color: black;
 }
 

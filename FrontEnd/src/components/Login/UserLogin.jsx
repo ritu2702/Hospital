@@ -53,7 +53,6 @@ export const UserLogin = () => {
       axios.post(`${baseurl}/api/login`, data).then((response) => {
         console.log(response.data);
         let result = response.data;
-
         if (result === 0) {
           console.log("Success");
           toast.success("Succcesful Login!");

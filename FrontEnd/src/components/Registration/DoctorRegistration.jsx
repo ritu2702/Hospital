@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./DoctorRegistration.css";
+import "./UserRegistration.css";
 import axios from "axios";
 import { baseurl } from "../../api/service";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +24,7 @@ export const DoctorRegistration = () => {
       .max(255)
       .required("Email is required"),
     mobileNo: yup.string().phone("IN").required("Mobile Number required"),
-    speciality: yup.string().required("Speciality required"),
+    speciality: yup.string().nullable().required("Speciality is required"),
     qualification: yup.string().required("Qualification required"),
     experience: yup.number().required("Experience required"),
     arrivalTime: yup.string().required("Arrival Time required"),
@@ -59,7 +59,7 @@ export const DoctorRegistration = () => {
   const postDataToServer = (data) => {
     axios.post(`${baseurl}/api/registerDoctors`, data).then(
       (response) => {
-        console.log(response);
+        console.log(response.data);
         console.log("Success");
         toast.success("Succesful Registration!");
       },
@@ -71,14 +71,14 @@ export const DoctorRegistration = () => {
   };
 
   return (
-    <div className="doctorfullcontainer">
-      <div className="doctorregister">
-        <div className="doctorcontainer">
-          <div className="doctorregtitle">Registration</div>
+    <div className="userfullcontainer">
+      <div className="userregister">
+        <div className="usercontainer">
+          <div className="userregtitle">Registration</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="doctoruser-details">
-              <div className="doctorinput-box">
-                <span className="doctordetails">Name</span>
+            <div className="user-details">
+              <div className="userinput-box">
+                <span className="userdetails">Name</span>
                 <input
                   type="text"
                   placeholder="Enter your full name"
@@ -88,8 +88,8 @@ export const DoctorRegistration = () => {
                 />
                 <p className="errorMessagesDoctor">{errors.name?.message}</p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Email</span>
+              <div className="userinput-box">
+                <span className="userdetails">Email</span>
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -99,8 +99,8 @@ export const DoctorRegistration = () => {
                 />
                 <p className="errorMessagesDoctor"> {errors.email?.message}</p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Phone</span>
+              <div className="userinput-box">
+                <span className="userdetails">Phone</span>
                 <input
                   type="text"
                   placeholder="Enter your number"
@@ -113,21 +113,41 @@ export const DoctorRegistration = () => {
                   {errors.mobileNo?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Speciality</span>
-                <input
-                  type="text"
-                  placeholder="Enter your Speciality"
+              <div className="userinput-box">
+                <span className="userdetails">Speciality</span>
+                <select
                   name="speciality"
                   id="speciality"
                   {...register("speciality")}
-                />
+                  className="bloodGroupStyle"
+                >
+                  <option value="">--Select Speciality--</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Oncology">Oncology</option>
+                  <option value="Neurology">Neurology</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="Gynaecology">Gynaecology</option>
+                  <option value="Orthopaedics">Orthopaedics</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="Diabetology">Diabetology</option>
+                  <option value="Endocrinology">Endocrinology</option>
+                  <option value="Ent">Ent</option>
+                  <option value="General Physician">General Physician</option>
+                  <option value="General Surgery">General Surgery</option>
+                  <option value="Nephrology">Nephrology</option>
+                  <option value="Neurosurgery">Neurosurgery</option>
+                  <option value="Urology">Urologuy</option>
+                  <option value="Opthamology">Opthamology</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Psychiatry">Psychaitry</option>
+                  <option value="Pulmonology">Pulmonology</option>
+                </select>
                 <p className="errorMessagesDoctor">
                   {errors.speciality?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Qualification</span>
+              <div className="userinput-box">
+                <span className="userdetails">Qualification</span>
                 <input
                   type="text"
                   name="qualification"
@@ -140,8 +160,8 @@ export const DoctorRegistration = () => {
                   {errors.qualification?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Experience</span>
+              <div className="userinput-box">
+                <span className="userdetails">Experience</span>
                 <input
                   type="number"
                   name="experience"
@@ -153,8 +173,8 @@ export const DoctorRegistration = () => {
                   {errors.experience?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Arrival Time</span>
+              <div className="userinput-box">
+                <span className="userdetails">Arrival Time</span>
                 <input
                   type="time"
                   name="=arrivalTime"
@@ -165,8 +185,8 @@ export const DoctorRegistration = () => {
                   {errors.arrivalTime?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Leaving Time</span>
+              <div className="userinput-box">
+                <span className="userdetails">Leaving Time</span>
                 <input
                   type="time"
                   name="leavingTime"
@@ -178,8 +198,8 @@ export const DoctorRegistration = () => {
                   {errors.leavingTime?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Password</span>
+              <div className="userinput-box">
+                <span className="userdetails">Password</span>
                 <input
                   type="password"
                   name="password"
@@ -191,8 +211,8 @@ export const DoctorRegistration = () => {
                   {errors.password?.message}
                 </p>
               </div>
-              <div className="doctorinput-box">
-                <span className="doctordetails">Confirm Password</span>
+              <div className="userinput-box">
+                <span className="userdetails">Confirm Password</span>
                 <input
                   type="password"
                   placeholder="Re-Enter Password"
@@ -205,11 +225,11 @@ export const DoctorRegistration = () => {
                 </p>
               </div>
             </div>
-            <div className="doctorbutton">
+            <div className="userbutton">
               <input type="submit" value="Register" />
             </div>
-            <div className="doctorintext">Or</div>
-            <div className="doctorbutton">
+            <div className="userintext">Or</div>
+            <div className="userbutton">
               <input type="submit" value="Login" onClick={handlePageChange} />
             </div>
           </form>

@@ -17,10 +17,10 @@ export const AboutText = () => {
         <Row>
           <Col>
             <p className="aboutText">
-              Established by Dr Prathap C Reddy in 1983, Apollo Healthcare has a
-              robust presence across the healthcare ecosystem. From routine
+              Established by Dr Prathap C Reddy in 1983, CliniCo Healthcare has
+              a robust presence across the healthcare ecosystem. From routine
               wellness and preventive health care to innovative life-saving
-              treatments and diagnostic services, Apollo Hospitals has touched
+              treatments and diagnostic services, CliniCo Hospitals has touched
               more than 120 million lives from over 120 countries, offering the
               best clinical outcomes.
             </p>

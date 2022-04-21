@@ -1,7 +1,24 @@
 import React from "react";
 import "./ContactUs.css";
+import emailjs from "emailjs-com";
 
 export const ContactUs = () => {
+  function sendEmail(e) {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_8fndzzs",
+        "template_04e9iy5",
+        e.target,
+        "XWovAVfjrqf7bG05A"
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="body-contact">
       <div class="contact-section">
@@ -21,7 +38,7 @@ export const ContactUs = () => {
         </div>
         <div class="contact-form">
           <h2>Contact us</h2>
-          <form class="contact" action="" method="post">
+          <form class="contact" onSubmit={sendEmail}>
             <input
               type="text"
               name="name"
@@ -31,7 +48,7 @@ export const ContactUs = () => {
             />
             <input
               type="email"
-              name="email"
+              name="myemail"
               class="text-box"
               placeholder="Your Email"
               required

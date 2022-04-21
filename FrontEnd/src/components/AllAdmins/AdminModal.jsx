@@ -16,6 +16,10 @@ export const AdminModal = () => {
     e.preventDefault();
     navigate("/alldoctors", { replace: true });
   };
+  const handlePageChangeAppointments = (e) => {
+    e.preventDefault();
+    navigate("/appointmentTable", { replace: true });
+  };
 
   return (
     <div>
@@ -40,6 +44,16 @@ export const AdminModal = () => {
             ></FontAwesomeIcon>
             <div onClick={handlePageChangeDoctor}>
               <h3 className="adminmodaluser-title">Doctor</h3>
+            </div>
+          </Col>
+          <Col className="adminmodalinsidebox">
+            <FontAwesomeIcon
+              className="adminmodaldoctor-icon"
+              icon={faUserDoctor}
+              size="6x"
+            ></FontAwesomeIcon>
+            <div onClick={handlePageChangeAppointments}>
+              <h3 className="adminmodaluser-title">Appointments</h3>
             </div>
           </Col>
         </Row>

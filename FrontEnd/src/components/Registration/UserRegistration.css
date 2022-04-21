@@ -103,7 +103,7 @@ form .user-details .userinput-box {
 }
 
 .usercontainer form .user-details input:focus,
-.usercontainer form .user-details input:valid {
+.usercontainer form .user-details input:hover {
     border-color: black;
 }
 
